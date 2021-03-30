@@ -1,3 +1,6 @@
 [submodule "lib/TR.BIDS.ArduinoLibs"]
 	path = lib/TR.BIDS.ArduinoLibs
 	url = https://github.com/TetsuOtter/TR.BIDS.ArduinoLibs.git
+[submodule "lib/SpdDriveLibrary"]
+	path = lib/SpdDriveLibrary
+	url = https://github.com/stop-pattern/SpdDriveLibrary.git
