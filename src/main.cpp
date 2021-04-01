@@ -8,6 +8,11 @@ bool isNonAS = false;
 BIDS bids = BIDS(&Serial);
 SpdDrive Board = SpdDrive();
 
+void Assert() {
+  Serial.println("Assert");
+  while(1) delay(1000);
+}
+
 void SpeedChanged(int valI, double valF) {
   Board.setPWM1duty(valF / 120);
 }
@@ -52,25 +57,25 @@ void setup() {
   Board.begin();
   Serial.begin(115200);
   while (!Serial);
-  if (!bids.AddAutoSend('E', 1, SpeedChanged)) assert();
-  if (!bids.AddAutoSend('P', 135, orpChanged)) assert();
-  if (!bids.AddAutoSend('P', 100, dispChanged)) assert();
-  if (!bids.AddAutoSend('P', 132, atcGChanged)) assert();
-  if (!bids.AddAutoSend('P', 131, atcRChanged)) assert();
-  if (!bids.AddAutoSend('P', 101, atcXChanged)) assert();
-  if (!bids.AddAutoSend('P', 134, atcPChanged)) assert();
-  if (!bids.AddAutoSend('P', 133, atcNoticeChanged)) assert();
-  if (!bids.AddAutoSend('P', 161, backLightChanged)) assert();
-  if (!bids.AddAutoSend('d', 1, doorChanged)) assert();
-  if (!bids.AddAutoSend('P', 44, atsChanged)) assert();
-  if (!bids.AddAutoSend('P', 42, ats15Changed)) assert();
-  if (!bids.AddAutoSend('P', 43, ats60Changed)) assert();
+  if (!bids.AddAutoSend('E', 1, SpeedChanged)) Assert();
+  if (!bids.AddAutoSend('P', 135, orpChanged)) Assert();
+  if (!bids.AddAutoSend('P', 100, dispChanged)) Assert();
+  if (!bids.AddAutoSend('P', 132, atcGChanged)) Assert();
+  if (!bids.AddAutoSend('P', 131, atcRChanged)) Assert();
+  if (!bids.AddAutoSend('P', 101, atcXChanged)) Assert();
+  if (!bids.AddAutoSend('P', 134, atcPChanged)) Assert();
+  if (!bids.AddAutoSend('P', 133, atcNoticeChanged)) Assert();
+  if (!bids.AddAutoSend('P', 161, backLightChanged)) Assert();
+  if (!bids.AddAutoSend('d', 1, doorChanged)) Assert();
+  if (!bids.AddAutoSend('P', 44, atsChanged)) Assert();
+  if (!bids.AddAutoSend('P', 42, ats15Changed)) Assert();
+  if (!bids.AddAutoSend('P', 43, ats60Changed)) Assert();
 }
 
 void loop()
 {
   isNonAS = false;
   if (!bids.ASDataCheck(&isNonAS) && isNonAS) {
-    while (true) assert();
+    while (true) Assert();
   }
 }
