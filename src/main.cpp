@@ -57,6 +57,9 @@ void setup() {
   Board.begin();
   Serial.begin(115200);
   while (!Serial);
+  Serial.println("serial connected");
+  delay(1000);
+
   if (!bids.AddAutoSend('E', 1, SpeedChanged)) Assert();
   if (!bids.AddAutoSend('P', 135, orpChanged)) Assert();
   if (!bids.AddAutoSend('P', 100, dispChanged)) Assert();
