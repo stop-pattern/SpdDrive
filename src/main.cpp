@@ -54,14 +54,7 @@ void ats60Changed(int valI, double valF) {
   Board.setAts60(valI);
 }
 
-void setup() {
-  Board.begin();
-  Serial.begin(115200);
-  while (!Serial);
-  Serial.println("serial connected");
-  bidsVersion = bids.CmdSenderI("TRV" + bidsVersion);
-  delay(1000);
-
+void setAutoSend() {
   if (!bids.AddAutoSend('E', 1, SpeedChanged)) Assert();
   if (!bids.AddAutoSend('P', 135, orpChanged)) Assert();
   if (!bids.AddAutoSend('P', 100, dispChanged)) Assert();
@@ -77,10 +70,38 @@ void setup() {
   if (!bids.AddAutoSend('P', 43, ats60Changed)) Assert();
 }
 
-void loop()
-{
+void loop202() {
   isNonAS = false;
   if (!bids.ASDataCheck(&isNonAS) && isNonAS) {
     while (true) Assert();
   }
+}
+
+void setup() {
+  Board.begin();
+  Serial.begin(115200);
+  while (!Serial);
+  Serial.println("serial connected");
+  bidsVersion = bids.CmdSenderI("TRV" + bidsVersion);
+  delay(1000);
+
+  if(bidsVersion >= 200) setAutoSend();
+
+}
+
+void loop(){
+  if(200 <= bidsVersion && bidsVersion < 250) {
+    while (true) {
+      loop202();
+    }
+  }
+
+  if(100 <= bidsVersion && bidsVersion < 200) {
+    while (true) {
+      /* v100 code */
+    }
+  }
+
+  Serial.println("bids version is invalid");
+  Assert();
 }
