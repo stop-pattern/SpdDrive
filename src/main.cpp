@@ -5,6 +5,7 @@
 #include "SpdDrive.h"
 
 bool isNonAS = false;
+int bidsVersion = 202;
 BIDS bids = BIDS(&Serial);
 SpdDrive Board = SpdDrive();
 
@@ -58,6 +59,7 @@ void setup() {
   Serial.begin(115200);
   while (!Serial);
   Serial.println("serial connected");
+  bidsVersion = bids.CmdSenderI("TRV" + bidsVersion);
   delay(1000);
 
   if (!bids.AddAutoSend('E', 1, SpeedChanged)) Assert();
